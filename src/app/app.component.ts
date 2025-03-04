@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Todo } from './todo';
 import { AppService } from './app.service';
+import { CheckboxChangeEvent } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { AppService } from './app.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild('todoTask') todoTask: any;
 
   title = 'Todo App';
   todos: Todo[] = [];
@@ -27,15 +30,25 @@ export class AppComponent implements OnInit {
   }
 
   addTodo(){
-    console.log("added",this.task);
+    //console.log("added",this.task);
+    this.appService.addTodo({task: this.task, completed: false}).subscribe(() => {
+      this.todoTask.reset();
+      this.getList();
+    });
   }
 
-  updateTodo(e: unknown, todo: Todo) {
-    console.log(e, todo);
+  updateTodo(e: CheckboxChangeEvent, todo: Todo) {
+    //console.log(e, todo);
+    this.appService.updateTodo({...todo,completed: e.checked}).subscribe(() => {
+      //this.getList();
+    });
 
   }
 
   deleteTodo(e: unknown, id: Todo['id']) {
-    console.log(e, id);
+    //console.log(e, id);
+    this.appService.deleteTodo(id).subscribe(() => {
+      this.getList();
+    });
   }
 }
