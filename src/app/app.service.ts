@@ -7,8 +7,8 @@ import { Todo } from './todo';
 })
 export class AppService {
 
-  //baseUrl = 'http://localhost:3000';
-  baseUrl = 'https://bhagyadilhara.github.io/host-jsonserver-todolist/db.json';
+  baseUrl = 'http://localhost:3000';
+  //json-server db.json --watch
   constructor(private http: HttpClient) { }
 
   getTodoList(){

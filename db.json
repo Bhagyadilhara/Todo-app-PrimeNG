@@ -7,7 +7,7 @@
     },
     {
       "task": "Read books",
-      "completed": false,
+      "completed": true,
       "id": "2"
     },
     {
@@ -19,11 +19,6 @@
       "task": "Test application",
       "completed": false,
       "id": "4"
-    },
-    {
-      "id": "c1ba",
-      "task": "rg",
-      "completed": false
     }
   ]
 }
