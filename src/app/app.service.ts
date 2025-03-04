@@ -7,13 +7,14 @@ import { Todo } from './todo';
 })
 export class AppService {
 
-  baseUrl = 'http://localhost:3000';
+  //baseUrl = 'http://localhost:3000';
+  baseUrl = 'https://bhagyadilhara.github.io/host-jsonserver-todolist/db.json';
   constructor(private http: HttpClient) { }
 
   getTodoList(){
     return this.http.get<Todo[]>(`${this.baseUrl}/todos`);
   }
-  
+
   addTodo(postData: Todo) {
     return this.http.post(`${this.baseUrl}/todos`, postData);
   }
