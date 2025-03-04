@@ -1,27 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from './todo';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'angular-primeng-todo';
-  todos = [
-    {
-    id:1,
-    task: 'Task 1',
-    completed: true
-    },    
-    {
-      id:2,
-      task: 'Task 2',
-      completed: false
-    },
-  ];
+export class AppComponent implements OnInit {
 
+  title = 'Todo App';
+  todos: Todo[] = [];
   task: any = '';
+
+  constructor(private appService: AppService) {}
+    
+  ngOnInit(): void {
+    //throw new Error('Method not implemented.');
+    this.getList();
+  }
+
+  getList(){
+    this.appService.getTodoList().subscribe((data) => {
+      this.todos = data;
+    });
+  }
 
   addTodo(){
     console.log("added",this.task);
