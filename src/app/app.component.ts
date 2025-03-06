@@ -9,44 +9,45 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
   @ViewChild('todoTask') todoTask: any;
-
+  
   title = 'Todo App';
   todos: Todo[] = [];
-  task: any = '';
+  task: string = '';
 
   constructor(private appService: AppService) {}
-    
+
   ngOnInit(): void {
-    //throw new Error('Method not implemented.');
     this.getList();
   }
 
-  getList(){
+  getList(): void {
     this.appService.getTodoList().subscribe((data) => {
       this.todos = data;
     });
   }
 
-  addTodo(){
-    //console.log("added",this.task);
-    this.appService.addTodo({task: this.task, completed: false}).subscribe(() => {
-      this.todoTask.reset();
+  addTodo(): void {
+    if (!this.task.trim()) return;  // Prevent empty tasks
+
+    const newTodo: Todo = {
+      id: Date.now().toString(),  // Generate unique ID
+      task: this.task,
+      completed: false
+    };
+
+    this.appService.addTodo(newTodo).subscribe(() => {
+      this.task = '';  // Clear input
       this.getList();
     });
   }
 
-  updateTodo(e: CheckboxChangeEvent, todo: Todo) {
-    //console.log(e, todo);
-    this.appService.updateTodo({...todo,completed: e.checked}).subscribe(() => {
-      //this.getList();
-    });
-
+  updateTodo(e: CheckboxChangeEvent, todo: Todo): void {
+    const updatedTodo = { ...todo, completed: e.checked };
+    this.appService.updateTodo(updatedTodo).subscribe();
   }
 
-  deleteTodo(e: unknown, id: Todo['id']) {
-    //console.log(e, id);
+  deleteTodo(id: string): void {
     this.appService.deleteTodo(id).subscribe(() => {
       this.getList();
     });
