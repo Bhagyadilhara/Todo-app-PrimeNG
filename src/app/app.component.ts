@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Todo } from './todo';
 import { AppService } from './app.service';
+import { PlatformService } from './platform.service';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
 
 @Component({
@@ -10,14 +11,16 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
 })
 export class AppComponent implements OnInit {
   @ViewChild('todoTask') todoTask: any;
-  
+
   title = 'Todo App';
   todos: Todo[] = [];
   task: string = '';
+  isDesktop: boolean | undefined;
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService, private platformService: PlatformService) {}
 
   ngOnInit(): void {
+    this.isDesktop = this.platformService.isBrowser() && window.innerWidth >= 768;
     this.getList();
   }
 
