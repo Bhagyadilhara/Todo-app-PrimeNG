@@ -8,6 +8,8 @@ import { map, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AppService {
+
+  //reference : https://jsonbin.io/
   private binUrl = 'https://api.jsonbin.io/v3/b/67c93985e41b4d34e4a1a68d';  // Replace with your Bin ID
   private apiKey = '$2a$10$j1nuMyrv80Uk2c3sNeiIX.CFFM/HntbGEpfCvQUba91KlRmlC4K8y';  // Replace with your API key
 
