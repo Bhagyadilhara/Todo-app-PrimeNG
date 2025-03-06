@@ -41,7 +41,7 @@
             <p-button icon="pi pi-save" [disabled]="!!todoTask.invalid" (onClick)="addTodo()" class="w-full"/>
           </div>
         </div> -->
-        <div class="flex align-items-center gap-2">
+        <div class="flex align-items-center gap-2 mb-2">
           <input type="text" pInputText [(ngModel)]="task" placeholder="Enter new todo" #todoTask="ngModel" required class="flex-grow-1 w-full"/>
           <p-button icon="pi pi-save" [disabled]="!!todoTask.invalid" (onClick)="addTodo()" class="p-button-success"/>
         </div>
