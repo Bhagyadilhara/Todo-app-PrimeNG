@@ -1,5 +1,10 @@
 export interface Todo {
-    id?: number;
+    id: string;
     task: string;
     completed: boolean;
-}
+  }
+  
+  export interface TodoResponse {
+    todos: Todo[];
+  }
+  

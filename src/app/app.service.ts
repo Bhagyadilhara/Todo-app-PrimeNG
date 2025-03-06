@@ -1,29 +1,56 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Todo } from './todo';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Todo, TodoResponse } from './todo';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
+  private binUrl = 'https://api.jsonbin.io/v3/b/67c93985e41b4d34e4a1a68d';  // Replace with your Bin ID
+  private apiKey = '$2a$10$j1nuMyrv80Uk2c3sNeiIX.CFFM/HntbGEpfCvQUba91KlRmlC4K8y';  // Replace with your API key
 
-  baseUrl = 'http://localhost:3000';
-  //json-server db.json --watch
-  constructor(private http: HttpClient) { }
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-Master-Key': this.apiKey  // Needed for write access
+  });
 
-  getTodoList(){
-    return this.http.get<Todo[]>(`${this.baseUrl}/todos`);
+  constructor(private http: HttpClient) {}
+
+  // Fetch Todos
+  getTodoList(): Observable<Todo[]> {
+    return this.http.get<{ record: TodoResponse }>(this.binUrl, { headers: this.headers })
+      .pipe(map(response => response.record.todos || []));  // Extracts the array
   }
 
-  addTodo(postData: Todo) {
-    return this.http.post(`${this.baseUrl}/todos`, postData);
+  // Add Todo
+  addTodo(todo: Todo): Observable<any> {
+    return this.getTodoList().pipe(
+      switchMap((todos) => {
+        todos.push(todo);
+        return this.http.put(this.binUrl, { todos }, { headers: this.headers });
+      })
+    );
   }
 
-  updateTodo(postData: Todo) {
-    return this.http.patch(`${this.baseUrl}/todos/${postData.id}`, postData);
+  // Update Todo
+  updateTodo(todo: Todo): Observable<any> {
+    return this.getTodoList().pipe(
+      switchMap((todos) => {
+        const updatedTodos = todos.map(t => (t.id === todo.id ? todo : t));
+        return this.http.put(this.binUrl, { todos: updatedTodos }, { headers: this.headers });
+      })
+    );
   }
 
-  deleteTodo(id: Todo['id']) {
-    return this.http.delete(`${this.baseUrl}/todos/${id}`);
+  // Delete Todo
+  deleteTodo(id: string): Observable<any> {
+    return this.getTodoList().pipe(
+      switchMap((todos) => {
+        const updatedTodos = todos.filter(t => t.id !== id);
+        return this.http.put(this.binUrl, { todos: updatedTodos }, { headers: this.headers });
+      })
+    );
   }
 }
