@@ -1,4 +1,4 @@
-<div *ngIf="isDesktop; else mobileView" >
+<div *ngIf="isDesktop; else mobileView">
   <div class="flex flex-column align-items-center justify-content-center">
     <p-card header="Todo App" class="w-6">
       <div class="m-2 flex">
@@ -10,20 +10,20 @@
       <p class="m-0">
         <p-table [value]="todos">
           <ng-template pTemplate="header">
-              <tr>
-                  <th width="60%">Task</th>
-                  <th>Completed</th>
-                  <th width="5%"></th>
-              </tr>
+            <tr>
+              <th width="60%">Task</th>
+              <th>Completed</th>
+              <th width="5%"></th>
+            </tr>
           </ng-template>
           <ng-template pTemplate="body" let-todo>
-              <tr>
-                  <td>{{ todo.task }}</td>
-                  <td><p-checkbox [(ngModel)]="todo.completed" [binary]="true" (onChange)="updateTodo($event, todo)"/></td>
-                  <td><p-button icon="pi pi-trash" severity="danger" (onClick)="deleteTodo(todo.id)"/></td>
-              </tr>
+            <tr>
+              <td>{{ todo.task }}</td>
+              <td><p-checkbox [(ngModel)]="todo.completed" [binary]="true" (onChange)="updateTodo($event, todo)"/></td>
+              <td><p-button icon="pi pi-trash" severity="danger" (onClick)="deleteTodo(todo.id)"/></td>
+            </tr>
           </ng-template>
-      </p-table>
+        </p-table>
       </p>
     </p-card>
   </div>
@@ -33,13 +33,17 @@
   <div class="p-grid p-justify-center">
     <div class="p-col-12">
       <p-card header="Todo App">
-        <div class="p-grid p-align-center p-justify-between m-2">
-          <div class="p-col-8">
+        <!-- <div class="p-grid p-align-center p-justify-between m-2">
+          <div class="p-col-8 p-md-10">
             <input type="text" pInputText [(ngModel)]="task" placeholder="Enter new todo" #todoTask="ngModel" required class="w-full"/>
           </div>
-          <div class="p-col-4">
+          <div class="p-col-4 p-md-2">
             <p-button icon="pi pi-save" [disabled]="!!todoTask.invalid" (onClick)="addTodo()" class="w-full"/>
           </div>
+        </div> -->
+        <div class="flex align-items-center gap-2">
+          <input type="text" pInputText [(ngModel)]="task" placeholder="Enter new todo" #todoTask="ngModel" required class="flex-grow-1 w-full"/>
+          <p-button icon="pi pi-save" [disabled]="!!todoTask.invalid" (onClick)="addTodo()" class="p-button-success"/>
         </div>
         <p-table [value]="todos" responsiveLayout="scroll">
           <ng-template pTemplate="header">
