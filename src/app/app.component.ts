@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
 
     this.appService.addTodo(newTodo).subscribe(() => {
       this.task = '';  // Clear input
+      this.todoTask.reset();  // Reset the form control to clear validation errors
       this.getList();
     });
   }
