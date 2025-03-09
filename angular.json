@@ -25,7 +25,16 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              {
+                "input": "src/themes/light-theme.css",
+                "inject": false,
+                "bundleName": "light-theme"
+              },
+              {
+                "input": "src/themes/dark-theme.css",
+                "inject": false,
+                "bundleName": "dark-theme"
+              },
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeflex/primeflex.css",
               "src/styles.css"
