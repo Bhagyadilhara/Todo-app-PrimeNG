@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpClientModule } from '@angular/common/http';
-import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
   declarations: [
@@ -25,8 +24,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     FormsModule,
     ButtonModule,
     InputTextModule,
-    HttpClientModule,
-    ToggleButtonModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

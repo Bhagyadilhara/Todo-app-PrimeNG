@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Todo } from './todo';
 import { AppService } from './app.service';
 import { PlatformService } from './platform.service';
@@ -16,37 +16,12 @@ export class AppComponent implements OnInit {
   todos: Todo[] = [];
   task: string = '';
   isDesktop: boolean | undefined;
-  isDarkTheme = false;
-  themeLinkElement!:HTMLLinkElement;
 
-  constructor(private appService: AppService, private platformService: PlatformService, private renderer: Renderer2) {}
+  constructor(private appService: AppService, private platformService: PlatformService) {}
 
   ngOnInit(): void {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      this.isDarkTheme = savedTheme === 'dark-theme';
-      this.setTheme(this.isDarkTheme ? 'dark-theme' : 'light-theme');
-    }
     this.isDesktop = this.platformService.isBrowser() && window.innerWidth >= 768;
     this.getList();
-  }
-
-  private setTheme(theme: string): void {
-    if (!this.themeLinkElement) {
-      this.themeLinkElement = this.renderer.createElement('link');
-      this.themeLinkElement.rel = 'stylesheet';
-      this.themeLinkElement.type = 'text/css';
-      this.renderer.appendChild(document.head, this.themeLinkElement);
-    }
-    this.themeLinkElement.href = `${theme}.css`;
-
-  }
-
-  toggleTheme(){
-    this.isDarkTheme = !this.isDarkTheme;
-    const theme = this.isDarkTheme ? 'dark-theme' : 'light-theme';
-    this.setTheme(theme);
-    localStorage.setItem('theme', theme);
   }
 
   getList(): void {
