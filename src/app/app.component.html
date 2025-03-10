@@ -1,3 +1,10 @@
+<p-toggleButton
+  [onIcon]="isDarkTheme ? 'pi pi-moon' : 'pi pi-sun'"
+  [offIcon]="isDarkTheme ? 'pi pi-sun' : 'pi pi-moon'"
+  (onChange)="toggleTheme()"
+>
+</p-toggleButton>
+
 <div *ngIf="isDesktop; else mobileView">
   <div class="flex flex-column align-items-center justify-content-center">
     <p-card header="Todo App" class="w-6">
